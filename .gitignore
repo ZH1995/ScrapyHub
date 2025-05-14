@@ -1,0 +1,15 @@
+*.code-workspace
+*.log
+*.pyc
+__pycache__/
+.env
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+*.sqlite3
+node_modules/
+dist/
+build/
