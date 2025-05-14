@@ -13,3 +13,7 @@ __pycache__/
 node_modules/
 dist/
 build/
+.venv/
+# 本地配置文件
+local_settings.py
+*/*/local_settings.py
