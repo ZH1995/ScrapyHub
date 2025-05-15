@@ -6,12 +6,15 @@
 
 # useful for handling different item types with a single interface
 import pymysql
+import datetime
 from itemadapter import ItemAdapter
 
 
 class WeiboPipeline:
     def __init__(self, db_settings):
         self.db_settings = db_settings
+        # 批次时间戳将在每次爬虫启动时创建
+        self.batch_timestamp = None
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -44,15 +47,21 @@ class WeiboPipeline:
             )
         ''')
         self.conn.commit()
+        
+        # 为这个批次设置一个统一的时间戳
+        self.batch_timestamp = datetime.datetime.now()
+        spider.logger.info(f"批次开始时间: {self.batch_timestamp}")
 
     def close_spider(self, spider):
         self.conn.close()
+        spider.logger.info(f"批次结束，所有数据使用相同时间戳: {self.batch_timestamp}")
 
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
         title = adapter.get('title')
         url = adapter.get('url')
         hot_rank = adapter.get('hot_rank')
+        
         # 获取当前小时的开始时间
         current_hour = self.get_current_hour_start()
         
@@ -69,23 +78,23 @@ class WeiboPipeline:
         result = self.cursor.fetchone()
         
         if result:
-            # 更新已有记录
+            # 更新已有记录，使用批次时间戳
             self.cursor.execute(
                 '''
                 UPDATE weibo_hot_search 
-                SET hot_rank = %s, created_at = NOW() 
+                SET hot_rank = %s, created_at = %s 
                 WHERE id = %s
                 ''',
-                (hot_rank, result[0])
+                (hot_rank, self.batch_timestamp, result[0])
             )
         else:
-            # 插入新记录
+            # 插入新记录，使用批次时间戳
             self.cursor.execute(
                 '''
-                INSERT INTO weibo_hot_search (title, url, hot_rank) 
-                VALUES (%s, %s, %s)
+                INSERT INTO weibo_hot_search (title, url, hot_rank, created_at) 
+                VALUES (%s, %s, %s, %s)
                 ''',
-                (title, url, hot_rank)
+                (title, url, hot_rank, self.batch_timestamp)
             )
         
         self.conn.commit()
@@ -93,8 +102,7 @@ class WeiboPipeline:
 
     def get_current_hour_start(self):
         """获取当前小时的开始时间"""
-        import datetime
         now = datetime.datetime.now()
         hour_start = now.replace(minute=0, second=0, microsecond=0)
         return hour_start
-    
+
