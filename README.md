@@ -6,7 +6,7 @@ ScrapyHub是一个基于Scrapy框架的多网站数据采集系统，目前包�
 
 - **多站点数据采集**：目前支持微博热搜榜爬取，未来可扩展更多网站
 - **自动化定时采集**：每5分钟爬取一次微博热搜榜单
-- **数据去重**：在同一小时内对相同热搜条目进行更新而非重复插入
+- **数据去重**：在三天内对相同热搜条目进行更新而非重复插入
 - **结构化数据存储**：将热搜数据存储在MySQL数据库中
 
 ## 📋 项目结构
@@ -16,17 +16,46 @@ ScrapyHub/
 ├── README.md                 # 项目说明文档
 ├── requirements.txt          # 项目依赖包
 ├── scrapy.cfg                # Scrapy配置文件
+├── env.sh                    # 环境变量配置脚本
+├── run.sh                    # 爬虫运行脚本
+├── common/                   # 通用组件目录
+│   ├── __init__.py
+│   ├── middleware/           # 中间件目录
+│   │   ├── __init__.py
+│   │   └── user_agent.py     # 随机User-Agent中间件
+│   ├── pipelines/            # 公共数据管道
+│   │   ├── __init__.py
+│   │   ├── base_mysql_pipeline.py  # MySQL基础管道
+│   │   └── base_rank_pipeline.py   # 榜单数据管道基类
+│   ├── settings/             # 公共设置
+│   │   ├── __init__.py
+│   │   └── base_settings.py  # 基础设置
+│   └── utils/                # 工具函数
+│       ├── __init__.py
+│       ├── db_utils.py       # 数据库工具
+│       └── time_utils.py     # 时间处理工具
+├── logs/                     # 日志目录
+│   ├── weibo.log
+│   └── zhihu.log
 ├── spiders/                  # 爬虫项目目录
-    ├── weibo/                # 微博爬虫项目
-        ├── __init__.py
-        ├── items.py          # 数据项定义
-        ├── middlewares.py    # 中间件
-        ├── pipelines.py      # 数据管道
-        ├── settings.py       # 项目设置
-        ├── local_settings.py # 本地配置(不提交到Git)
-        └── spiders/          # 爬虫目录
-            ├── __init__.py
-            └── weibo_spider.py # 微博热搜爬虫
+│   ├── __init__.py
+│   ├── weibo/                # 微博爬虫项目
+│   │   ├── __init__.py
+│   │   ├── items.py          # 数据项定义
+│   │   ├── pipelines.py      # 数据管道
+│   │   ├── settings.py       # 项目设置
+│   │   ├── local_settings.py # 本地配置(不提交到Git)
+│   │   └── spiders/          # 爬虫目录
+│   │       ├── __init__.py
+│   │       └── weibo_spider.py # 微博热搜爬虫
+│   └── zhihu/                # 知乎爬虫项目
+│       ├── __init__.py
+│       ├── items.py          # 数据项定义
+│       ├── pipelines.py      # 数据管道
+│       ├── settings.py       # 项目设置
+│       └── spiders/          # 爬虫目录
+│           ├── __init__.py
+│           └── zhihu_spider.py # 知乎热榜爬虫
 ```
 
 ## 🛠️ 环境配置
@@ -54,16 +83,22 @@ pip install -r requirements.txt
 
 ### 数据库配置
 
-1. 创建名为`hot_news`的MySQL数据库
-2. 复制`local_settings.py.example`为local_settings.py并配置数据库连接信息：
+1. 创建名为`hot_list`的MySQL数据库
+2. 使用环境变量配置数据库
+```bash
+# 编辑 env_example.sh 文件
+export MYSQL_HOST=your_host
+export MYSQL_PORT=your_port
+export MYSQL_USER=your_user
+export MYSQL_PASSWORD=your_password
+export MYSQL_DATABASE=ranking
+export MYSQL_CHARSET=utf8mb4
 
-```python
-MYSQL_SETTINGS = {
-    'HOST': 'localhost',
-    'USER': 'your_username',
-    'PASSWORD': 'your_password',
-    'DATABASE': 'hot_news'
-}
+# 重命名为env.sh
+mv env_example.sh env.sh
+
+# 加载环境变量
+source env.sh
 ```
 
 ## 🕸️ 爬虫运行
@@ -94,13 +129,15 @@ scrapy crawl weibo
 | title | VARCHAR(255) | 热搜标题 |
 | url | VARCHAR(255) | 热搜链接 |
 | hot_rank | INT | 热搜排名 |
-| created_at | TIMESTAMP | 创建时间 |
+| source | TINYINT | 来源表示（1-微博，2-知乎） |
+| batch_timestamp | TIMESTAMP | 爬取批次时间 |
+| created_at | TIMESTAMP | 记录创建时间 |
 
 ## 🔧 常见问题
 
 ### 无法连接到数据库
 
-检查local_settings.py中的数据库配置是否正确，确保MySQL服务正在运行。
+检查env.sh中的数据库配置是否正确，确保MySQL服务正在运行。
 
 ### 爬虫无法获取数据
 
@@ -108,7 +145,8 @@ scrapy crawl weibo
 
 ## 📝 待办事项
 
-- [ ] 添加更多网站的爬虫
+- [x] 添加知乎的爬虫
+- [ ] 解决知乎爬虫身份校验问题
 - [ ] 增强数据分析功能
 - [ ] 添加Web界面展示热搜趋势
 - [ ] 优化数据库结构，支持更复杂的查询
