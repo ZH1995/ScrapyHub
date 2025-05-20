@@ -12,7 +12,6 @@ class DBPoolManager:
         """获取数据库连接"""
         global _pool
         if _pool is None:
-            print(db_settings['HOST'])
             _pool = PooledDB(
                 creator=pymysql,
                 maxconnections=10,  # 最大连接数
