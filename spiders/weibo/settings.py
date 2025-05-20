@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = "weibo"
 
@@ -50,11 +51,18 @@ DEFAULT_REQUEST_HEADERS = {
 #    "weibo.middlewares.WeiboSpiderMiddleware": 543,
 #}
 
-# Enable or disable downloader middlewares
+# 添加随机用户代理列表
+USER_AGENT_LIST = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
+]
+
+# 启用下载中间件
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "weibo.middlewares.WeiboDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    "common.middleware.user_agent.RandomUserAgentMiddleware": 543,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -95,13 +103,14 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 MYSQL_SETTINGS = {
-    'HOST': 'localhost',
-    'USER': 'root',
-    'PASSWORD': '',
-    'DATABASE': 'hot_news'
+    'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
+    'PORT': int(os.environ.get('MYSQL_PORT', 3306)),
+    'USER': os.environ.get('MYSQL_USER', 'root'),
+    'PASSWORD': os.environ.get('MYSQL_PASSWORD', ''),
+    'DATABASE': os.environ.get('MYSQL_DATABASE', ''),
+    'CHARSET': os.environ.get('MYSQL_CHARSET', 'utf8mb4'),
 }
-# 尝试从本地配置文件导入
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+
+LOG_LEVEL = 'INFO'  # 日志级别
+LOG_FILE = 'logs/weibo.log'  # 日志文件路径
+LOG_ENCODING = 'utf-8'

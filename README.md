@@ -49,7 +49,7 @@ source venv/bin/activate
 2. 安装项目依赖：
 
 ```bash
-pip install scrapy pymysql
+pip install -r requirements.txt
 ```
 
 ### 数据库配置

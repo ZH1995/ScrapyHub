@@ -1,12 +1,5 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
+from common.items.base_rank_items import BaseRankItem
 
-import scrapy
-
-
-class WeiboItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+class WeiboItem(BaseRankItem):
+    """微博热搜项"""
     pass

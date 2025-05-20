@@ -1,5 +1,4 @@
 *.code-workspace
-*.log
 *.pyc
 __pycache__/
 .env
@@ -17,3 +16,4 @@ build/
 # 本地配置文件
 local_settings.py
 */*/local_settings.py
+env.sh
