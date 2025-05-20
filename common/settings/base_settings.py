@@ -8,7 +8,8 @@ import sys
 # 定义默认的爬虫模块路径
 SPIDER_MODULES = [
     "spiders.weibo.spiders",
-    "spiders.zhihu.spiders"
+    "spiders.zhihu.spiders",
+    "spiders.baidu.spiders"
 ]
 
 # 基本配置，所有爬虫通用
