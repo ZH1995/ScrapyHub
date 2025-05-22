@@ -9,7 +9,8 @@ import sys
 SPIDER_MODULES = [
     "spiders.weibo.spiders",
     "spiders.zhihu.spiders",
-    "spiders.baidu.spiders"
+    "spiders.baidu.spiders",
+    "spiders.36kr.spiders"
 ]
 
 # 基本配置，所有爬虫通用
