@@ -1,10 +1,10 @@
 # ScrapyHub
 
-ScrapyHub是一个基于Scrapy框架的多网站数据采集系统，目前包含微博、百度、知乎热搜榜单爬虫，通过定时爬取存储热搜数据，可用于数据分析和趋势研究。
+ScrapyHub是一个基于Scrapy框架的多网站数据采集系统，目前包含微博、百度、36氪、知乎热搜榜单爬虫，通过定时爬取存储热搜数据，可用于数据分析和趋势研究。
 
 ## 🚀 功能特点
 
-- **多站点数据采集**：目前支持微博热搜榜爬取，未来可扩展更多网站
+- **多站点数据采集**：目前支持微博、百度、36氪热榜爬取，未来可扩展更多网站
 - **自动化定时采集**：每5分钟爬取一次微博热搜榜单
 - **数据去重**：在三天内对相同热搜条目进行更新而非重复插入
 - **结构化数据存储**：将热搜数据存储在MySQL数据库中
@@ -36,7 +36,7 @@ ScrapyHub/
 │       └── time_utils.py     # 时间处理工具
 ├── logs/                     # 日志目录
 │   ├── weibo.log
-│   └── zhihu.log
+│   └── baidu.log
 ├── spiders/                  # 爬虫项目目录
 │   ├── __init__.py
 │   ├── weibo/                # 微博爬虫项目
@@ -48,14 +48,14 @@ ScrapyHub/
 │   │   └── spiders/          # 爬虫目录
 │   │       ├── __init__.py
 │   │       └── weibo_spider.py # 微博热搜爬虫
-│   └── zhihu/                # 知乎爬虫项目
+│   └── baidu/                # 百度爬虫项目
 │       ├── __init__.py
 │       ├── items.py          # 数据项定义
 │       ├── pipelines.py      # 数据管道
 │       ├── settings.py       # 项目设置
 │       └── spiders/          # 爬虫目录
 │           ├── __init__.py
-│           └── zhihu_spider.py # 知乎热榜爬虫
+│           └── baidu_spider.py # 百度热榜爬虫
 ```
 
 ## 🛠️ 环境配置
@@ -129,7 +129,7 @@ scrapy crawl weibo
 | title | VARCHAR(255) | 热搜标题 |
 | url | VARCHAR(255) | 热搜链接 |
 | hot_rank | INT | 热搜排名 |
-| source | TINYINT | 来源表示（1-微博，2-知乎） |
+| source | TINYINT | 来源表示（1-微博，2-知乎，3-百度） |
 | batch_timestamp | TIMESTAMP | 爬取批次时间 |
 | created_at | TIMESTAMP | 记录创建时间 |
 
@@ -147,6 +147,7 @@ scrapy crawl weibo
 
 - [x] 添加知乎的爬虫
 - [x] 添加百度的爬虫
+- [x] 添加36氪的爬虫
 - [ ] 解决知乎爬虫身份校验问题
 - [ ] 增强数据分析功能
 - [x] 优化数据库结构，支持更复杂的查询
