@@ -12,7 +12,8 @@ SPIDER_MODULES = [
     "spiders.baidu.spiders",
     "spiders.36kr.spiders",
     "spiders.douyin.spiders",
-    "spider.wallstreetcn.spiders",
+    "spiders.wallstreetcn.spiders",
+    "spiders.thepaper.spiders",
 ]
 
 # 基本配置，所有爬虫通用
