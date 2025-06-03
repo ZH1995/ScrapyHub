@@ -31,7 +31,7 @@ class WeiboSpider(scrapy.Spider):
                         yield WeiboItem(
                             title=title,
                             url=url,
-                            hot_rank=hot_rank
+                            hot_rank=hot_rank+1
                         )
         except json.JSONDecodeError as e:
             self.logger.error(f"无法解析JSON数据: {e}")
