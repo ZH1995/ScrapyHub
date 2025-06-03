@@ -2,6 +2,7 @@ from pathlib import Path
 import scrapy
 import json
 from ..items import DouyinItem
+from urllib.parse import quote
 
 class DouyinSpider(scrapy.Spider):
     name = 'douyin'
@@ -22,7 +23,8 @@ class DouyinSpider(scrapy.Spider):
                     title = item.get('word')
                     hot_rank = item.get('position')
                     sentence_id = item.get('sentence_id')
-                    url = f"https://www.douyin.com/hot/{sentence_id}"
+                    encoded_title = quote(title)
+                    url = f"https://www.douyin.com/hot/{sentence_id}/{encoded_title}"
                     
                     if title and url:
                         yield DouyinItem(
