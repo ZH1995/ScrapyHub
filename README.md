@@ -66,13 +66,13 @@ ScrapyHub/
 
 ```bash
 # 创建虚拟环境
-python -m venv venv
+python -m venv .venv
 
 # 激活虚拟环境
 # 在Windows上:
-venv\Scripts\activate
+.venv\Scripts\activate
 # 在macOS/Linux上:
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 2. 安装项目依赖：
@@ -84,21 +84,23 @@ pip install -r requirements.txt
 ### 数据库配置
 
 1. 创建名为`hot_list`的MySQL数据库
-2. 使用环境变量配置数据库
-```bash
-# 编辑 env_example.sh 文件
-export MYSQL_HOST=your_host
-export MYSQL_PORT=your_port
-export MYSQL_USER=your_user
-export MYSQL_PASSWORD=your_password
-export MYSQL_DATABASE=ranking
-export MYSQL_CHARSET=utf8mb4
-
-# 重命名为env.sh
+2. Linux/Mac配置 (参考env_example.sh 文件)
+```
+# 模板重命名
 mv env_example.sh env.sh
-
-# 加载环境变量
+# 修改为真实配置
+vim env.sh
+# 加载配置
 source env.sh
+```
+3. Windows配置（参考env_win_example.sh 文件）
+```
+# 模板重命名
+mv env_win_example.sh env.ps1
+# 修改为真实配置
+vim env.ps1
+# 加载配置
+env.ps1
 ```
 
 ## 🕸️ 爬虫运行

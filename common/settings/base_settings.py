@@ -1,10 +1,12 @@
 """
 公共配置文件，用于集中管理所有爬虫的设置
 """
+from dotenv import load_dotenv
 import os
 import importlib
 import sys
-
+# 加载环境变量，无论在哪个操作系统上都能工作
+load_dotenv()
 # 定义默认的爬虫模块路径
 SPIDER_MODULES = [
     "spiders.weibo.spiders",

@@ -1,0 +1,6 @@
+$env:MYSQL_HOST = "localhost"
+$env:MYSQL_USER = "username"
+$env:MYSQL_PASSWORD = "password"
+$env:MYSQL_DATABASE = "database_name"
+$env:MYSQL_CHARSET = "utf8mb4"
+$env:SECRET_KEY = "your_secret_key_here"
