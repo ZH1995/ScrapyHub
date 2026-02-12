@@ -15,7 +15,7 @@ if __name__ == '__main__':
         print("\n可用的爬虫:")
         print("  weibo        - 微博热搜")
         print("  baidu        - 百度热搜")
-        print("  36kr         - 36氪热榜")
+        #print("  36kr         - 36氪热榜")
         print("  douyin       - 抖音热榜")
         print("  wallstreetcn - 华尔街见闻")
         print("  thepaper     - 澎湃新闻")
