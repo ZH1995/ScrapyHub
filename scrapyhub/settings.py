@@ -36,6 +36,7 @@ DEFAULT_REQUEST_HEADERS = {
 # 中间件
 DOWNLOADER_MIDDLEWARES = {
     'scrapyhub.middlewares.RandomUserAgentMiddleware': 543,
+    'scrapyhub.middlewares.RandomDelayMiddleware': 544,
 }
 
 # Pipeline
