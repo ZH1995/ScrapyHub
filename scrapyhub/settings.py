@@ -8,14 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 # 项目基本配置
-BOT_NAME = 'scrapyhub'
+BOT_NAME = 'Mozilla' # 通用的爬虫名称
 SPIDER_MODULES = ['scrapyhub.spiders']
 NEWSPIDER_MODULE = 'scrapyhub.spiders'
 
 # 并发和延迟
-CONCURRENT_REQUESTS = 16
-DOWNLOAD_DELAY = 2
-ROBOTSTXT_OBEY = False
+CONCURRENT_REQUESTS = 2
+DOWNLOAD_DELAY = 5
+ROBOTSTXT_OBEY = True # 遵守robots.txt规则
 
 # 用户代理列表
 USER_AGENT_LIST = [
@@ -49,7 +49,7 @@ MYSQL_SETTINGS = {
     'PORT': int(os.getenv('MYSQL_PORT', 3306)),
     'USER': os.getenv('MYSQL_USER', 'root'),
     'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
-    'DATABASE': os.getenv('MYSQL_DATABASE', 'hot_news'),
+    'DATABASE': os.getenv('MYSQL_DATABASE', 'hot_list'),
     'CHARSET': os.getenv('MYSQL_CHARSET', 'utf8mb4'),
 }
 
