@@ -35,7 +35,7 @@ ScrapyHub/
     ├── items.py              # Item定义
     ├── middlewares.py        # 中间件
     ├── pipelines.py          # 数据管道
-    ├── spider/               # 爬虫目录
+    ├── spiders/               # 爬虫目录
     │   ├── __init__.py
     │   ├── weibo_spider.py   # 微博热搜
     │   ├── baidu_spider.py   # 百度热榜
