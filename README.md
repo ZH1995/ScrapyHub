@@ -66,7 +66,7 @@ ScrapyHub/
 
 ```bash
 # 创建虚拟环境
-python -m venv .venv
+python3 -m venv .venv
 
 # 激活虚拟环境
 # 在Windows上:
@@ -115,10 +115,37 @@ scrapy crawl weibo
 ### 定时任务配置
 
 使用crontab（Linux/macOS）或任务计划程序（Windows）设置定时任务：
-
+（建议使用阿里云ECS的定时任务）
 ```bash
+# 编辑cron
+crontab -e
+
 # 每5分钟运行一次爬虫 (Linux/macOS crontab示例)
-*/5 * * * * cd /path/to/ScrapyHub && /path/to/venv/bin/python -m scrapy crawl weibo
+*/5 * * * * cd /root/workspace/ScrapyHub && source .venv/bin/activate && source env.sh && python -m scrapy crawl baidu >> logs/baidu.log 2>&1
+
+# 重启定时任务
+sudo service cron restart
+```
+
+### 日志管理
+
+```
+# 安装日志轮转工具
+sudo apt install logrotate -y
+
+# 创建日志轮转配置
+sudo vim /etc/logrotate.d/scrapyhub
+
+# 添加以下内容
+/home/ubuntu/projects/ScrapyHub/logs/*.log {
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    create 0640 ubuntu ubuntu
+}
 ```
 
 ## 📊 数据结构
