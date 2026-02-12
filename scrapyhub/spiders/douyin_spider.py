@@ -13,6 +13,12 @@ class DouyinSpider(scrapy.Spider):
     
     custom_settings = {
         'LOG_FILE': 'logs/douyin.log',
+        'DEFAULT_REQUEST_HEADERS': {
+            'Accept': 'application/json, text/plain, */*',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Connection': 'keep-alive',
+            'Referer': 'https://www.douyin.com/hot'
+        }
     }
 
     def parse(self, response):

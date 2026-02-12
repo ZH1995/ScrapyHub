@@ -4,47 +4,35 @@ import time
 
 
 class RandomUserAgentMiddleware:
-    """随机用户代理和请求头中间件"""
+    """随机用户代理中间件"""
     
     def __init__(self, agents):
         self.agents = agents
-        self.referers = [
-            'https://www.google.com/',
-            'https://www.baidu.com/',
-            'https://www.bing.com/',
-            'https://github.com/',
-            'https://www.wikipedia.org/',
-        ]
-        self.accept_encodings = ['gzip, deflate, br', 'gzip, deflate', 'deflate']
     
     @classmethod
     def from_crawler(cls, crawler):
         return cls(crawler.settings.getlist('USER_AGENT_LIST'))
     
     def process_request(self, request, spider):
-        # 随机 User-Agent
+        # 设置随机 User-Agent
         if self.agents:
             request.headers['User-Agent'] = random.choice(self.agents)
         
-        # 随机 Referer
-        request.headers.setdefault('Referer', random.choice(self.referers))
+        # 根据不同爬虫设置对应的 Referer
+        referer_map = {
+            'weibo': 'https://www.weibo.com/',
+            'baidu': 'https://www.baidu.com/',
+            'zhihu': 'https://www.zhihu.com/',
+            '36kr': 'https://36kr.com/',
+            'douyin': 'https://www.douyin.com/',
+            'wallstreetcn': 'https://www.wallstreetcn.com/',
+            'thepaper': 'https://www.thepaper.cn/',
+        }
         
-        # 随机 Accept-Encoding
-        request.headers.setdefault('Accept-Encoding', random.choice(self.accept_encodings))
-        
-        # Accept-Language 多样化
-        languages = [
-            'zh-CN,zh;q=0.9,en;q=0.8',
-            'zh-CN,zh;q=0.8,en;q=0.6',
-            'en-US,en;q=0.9,zh-CN;q=0.8',
-        ]
-        request.headers.setdefault('Accept-Language', random.choice(languages))
-        
-        # 打乱请求头顺序（增强隐蔽性）
-        headers = dict(request.headers)
-        request.headers.clear()
-        for key in random.sample(list(headers.keys()), len(headers)):
-            request.headers[key] = headers[key]
+        # 如果没有在 custom_settings 中指定 Referer，使用默认的
+        if 'Referer' not in request.headers:
+            referer = referer_map.get(spider.name, 'https://www.google.com/')
+            request.headers['Referer'] = referer
 
 
 class RandomDelayMiddleware:
@@ -56,7 +44,7 @@ class RandomDelayMiddleware:
     @classmethod
     def from_crawler(cls, crawler):
         delay = float(crawler.settings.get('DOWNLOAD_DELAY', 5))
-        return cls((delay * 0.5, delay * 1.5))  # 在基础延迟的 50%-150% 之间
+        return cls((delay * 0.5, delay * 1.5))
     
     def process_request(self, request, spider):
         delay = random.uniform(self.delay_range[0], self.delay_range[1])

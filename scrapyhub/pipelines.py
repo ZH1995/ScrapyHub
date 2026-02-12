@@ -1,5 +1,6 @@
 # scrapyhub/pipelines.py
 from datetime import datetime, timedelta
+
 from .utils.db_utils import DBPoolManager
 
 
@@ -50,6 +51,10 @@ class RankingPipeline:
         source_id = self.SOURCE_MAP.get(item.get('source', spider.name), 0)
         three_days_ago = datetime.now() - timedelta(days=3)
         
+        # 打印输出进行调试
+        #spider.logger.info(f"Item: {item}")
+        #return item
+
         # 检查是否存在
         check_sql = """
             SELECT id FROM ranking 
@@ -82,7 +87,6 @@ class RankingPipeline:
                 source_id
             ))
             spider.logger.debug(f"插入新记录: {item['title']}")
-        
         return item
     
     def _ensure_table(self):
