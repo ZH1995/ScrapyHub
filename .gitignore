@@ -1,20 +1,91 @@
-*.code-workspace
+# Python
 *.pyc
+*.pyo
+*.pyd
 __pycache__/
-.env
-.DS_Store
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
 .vscode/
 .idea/
+*.code-workspace
 *.swp
-*.bak
-*.tmp
-*.sqlite3
-node_modules/
-dist/
-build/
-.venv/
-# 本地配置文件
-local_settings.py
-*/*/local_settings.py
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# 项目特定
+.env
 env.sh
 env.ps1
+local_settings.py
+*/*/local_settings.py
+
+# Scrapy
+.scrapy/
+
+# 日志文件
+*.log
+logs/*.log
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+
+# 备份文件
+*.bak
+*.tmp
+*.swp
+*~.nib
+
+# 构建和分发
+dist/
+build/
+*.egg-info/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 测试
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# 文档
+docs/_build/
+
+# 依赖
+node_modules/
+
+# 旧代码备份（重构后）
+spiders_old/
+common_old/
+*.py.bak
+
+# 爬虫数据（可选，如果不想提交爬取的数据）
+# data/
+# output/
+# downloads/
