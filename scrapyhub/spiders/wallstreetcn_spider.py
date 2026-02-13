@@ -30,6 +30,10 @@ class WallstreetcnSpider(scrapy.Spider):
                 day_items = data['data']['day_items']
                 rank = 1
                 for item in day_items:
+                    # 只取前30条数据
+                    if rank > 30:
+                        break
+
                     title = item.get('title')
                     url = item.get('uri')
                     

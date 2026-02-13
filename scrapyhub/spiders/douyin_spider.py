@@ -32,6 +32,9 @@ class DouyinSpider(scrapy.Spider):
                 for item in word_list:
                     title = item.get('word')
                     hot_rank = item.get('position')
+                    if hot_rank is not None and hot_rank > 30:
+                        break
+
                     sentence_id = item.get('sentence_id')
                     
                     encoded_title = quote(title)

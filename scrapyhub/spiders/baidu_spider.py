@@ -25,6 +25,9 @@ class BaiduSpider(scrapy.Spider):
         hot_items = response.css('div.category-wrap_iQLoo.horizontal_1eKyQ')
         
         for rank, item in enumerate(hot_items, 1):
+            if rank > 30:
+                break
+
             # 提取标题和链接
             title_element = item.css('div.c-single-text-ellipsis::text').get()
             link = item.css('a.title_dIF3B::attr(href)').get()

@@ -30,6 +30,8 @@ class ThepaperSpider(scrapy.Spider):
                 hot_news = data['data']['hotNews']
                 rank = 1
                 for item in hot_news:
+                    if rank > 30:
+                        break
                     title = item.get('name')
                     cont_id = item.get('contId')
                     url = f"https://www.thepaper.cn/newsDetail_forward_{cont_id}"
