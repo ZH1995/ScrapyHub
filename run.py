@@ -19,6 +19,7 @@ if __name__ == '__main__':
         print("  douyin       - 抖音热榜")
         print("  wallstreetcn - 华尔街见闻")
         print("  thepaper     - 澎湃新闻")
+        print("  zhihu        - 知乎")
         print("\n示例:")
         print("  python run.py weibo")
         sys.exit(0)
