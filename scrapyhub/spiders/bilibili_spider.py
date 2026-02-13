@@ -12,7 +12,6 @@ class BilibiliSpider(scrapy.Spider):
     
     custom_settings = {
         'LOG_FILE': 'logs/bilibili.log',
-        'ROBOTSTXT_OBEY': False,
         'DEFAULT_REQUEST_HEADERS': {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
             'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
