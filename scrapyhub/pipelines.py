@@ -17,7 +17,8 @@ class RankingPipeline:
         'thepaper': 7,
         'zhihu': 8,
         'toutiao': 9,
-        'bilibili': 10
+        'bilibili': 10,
+        'juejin': 11
     }
     
     def __init__(self, db_settings):

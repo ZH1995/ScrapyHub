@@ -22,6 +22,7 @@ if __name__ == '__main__':
         print("  zhihu        - 知乎")
         print("  toutiao      - 头条热榜")
         print("  bilibili     - Bilibili热榜")
+        print("  juejin       - 掘金热榜")
         print("\n示例:")
         print("  python run.py weibo")
         sys.exit(0)
