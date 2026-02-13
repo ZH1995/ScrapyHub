@@ -119,6 +119,10 @@ LOG_LEVEL=INFO
 使用 [run.py](run.py) 脚本运行指定爬虫：
 
 ```bash
+# 赋予脚本可执行权限
+chmod +x run.py
+chmod +x run_all.py
+
 # 查看帮助
 python run.py
 
