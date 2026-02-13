@@ -166,11 +166,11 @@ scrapy crawl weibo
 # 编辑crontab
 crontab -e
 
-# 每5分钟运行一次微博爬虫
-*/5 * * * * cd /path/to/ScrapyHub && .venv/bin/python run.py weibo >> logs/weibo.log 2>&1
+# 每10分钟运行一次微博爬虫
+*/10 * * * * cd /opt/ScrapyHub && /opt/ScrapyHub/.venv/bin/python /opt/ScrapyHub/run.py weibo >> logs/weibo.log 2>&1
 
 # 每小时运行一次所有爬虫
-0 * * * * cd /path/to/ScrapyHub && .venv/bin/python run_all.py >> logs/cron.log 2>&1
+0 * * * * cd /opt/ScrapyHub && /opt/ScrapyHub/.venv/bin/python /opt/ScrapyHub/run_all.py >> /opt/ScrapyHub/logs/run_all.log 2>&1
 
 # 重启cron服务
 sudo service cron restart
