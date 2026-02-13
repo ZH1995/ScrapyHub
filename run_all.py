@@ -5,7 +5,7 @@ import os
 import subprocess
 from datetime import datetime
 
-SPIDERS = ['weibo', 'baidu', 'douyin', 'wallstreetcn', 'thepaper', 'zhihu', 'toutiao']
+SPIDERS = ['weibo', 'baidu', 'douyin', 'wallstreetcn', 'thepaper', 'zhihu', 'toutiao', 'bilibili']
 
 if __name__ == '__main__':
     start_time = datetime.now()
