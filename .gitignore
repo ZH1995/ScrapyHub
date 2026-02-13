@@ -43,6 +43,8 @@ local_settings.py
 # 日志文件
 *.log
 logs/*.log
+# 保留logs目录
+!logs/.gitkeep
 
 # 数据库
 *.db
