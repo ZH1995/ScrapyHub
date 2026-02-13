@@ -36,6 +36,9 @@ class WeiboSpider(scrapy.Spider):
                     hot_rank = item.get('rank')
                     topic_flag = item.get('topic_flag')
 
+                    if title is None and topic_flag is None:
+                        continue
+
                     # 只取前30条数据
                     if hot_rank is not None and hot_rank >= 30:
                         break

@@ -34,7 +34,7 @@ class ThepaperSpider(scrapy.Spider):
                         break
                     title = item.get('name')
                     cont_id = item.get('contId')
-                    url = f"https://www.thepaper.cn/newsDetail_forward_{cont_id}"
+                    url = f"https://www.thepaper.cn/newsDetail_forward_{cont_id}" if cont_id else None
                     
                     if title and url:
                         yield RankingItem(

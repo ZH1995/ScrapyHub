@@ -36,7 +36,9 @@ class DouyinSpider(scrapy.Spider):
                         break
 
                     sentence_id = item.get('sentence_id')
-                    
+                    if title is None or sentence_id is None:
+                        continue
+        
                     encoded_title = quote(title)
                     url = f"https://www.douyin.com/hot/{sentence_id}/{encoded_title}"
                     

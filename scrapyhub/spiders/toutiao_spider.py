@@ -36,7 +36,7 @@ class ToutiaoSpider(scrapy.Spider):
 
                     title = item.get('Title')
                     cluster_id = item.get('ClusterId')
-                    url = f"https://www.toutiao.com/trending/{cluster_id}"
+                    url = f"https://www.toutiao.com/trending/{cluster_id}" if cluster_id else None
 
                     if title and url:
                         yield RankingItem(
