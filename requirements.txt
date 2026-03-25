@@ -1,5 +1,5 @@
 # Scrapy 核心框架
-Scrapy==2.14.0
+Scrapy==2.14.2
 
 # 数据库相关
 PyMySQL==1.1.1
