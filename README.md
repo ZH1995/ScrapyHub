@@ -1,3 +1,5 @@
+
+
 # ScrapyHub
 
 ScrapyHub是一个基于Scrapy 2.14框架的多网站热榜数据采集系统，目前支持微博、百度、抖音、华尔街见闻、澎湃等热搜榜单爬取，通过定时采集存储热榜数据，可用于数据分析和趋势研究。
@@ -285,7 +287,7 @@ sudo vim /etc/logrotate.d/scrapyhub
 
 **解决**：
 - 36氪的选择器可能需要更新
-- 查看 [scrapyhub/spider/kr36_spider.py](scrapyhub/spider/kr36_spider.py) 中的选择器配置
+- 查看 [scrapyhub/spiders/kr36_spider.py](scrapyhub/spiders/kr36_spider.py) 中的选择器配置
 - 尝试访问目标URL检查页面结构
 
 ## 📝 开发指南
