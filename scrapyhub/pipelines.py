@@ -1,6 +1,8 @@
 # scrapyhub/pipelines.py
 from datetime import datetime, timedelta
+from typing import Any
 
+from .items import validate_ranking_item
 from .utils.db_utils import DBPoolManager
 
 
@@ -15,17 +17,16 @@ class RankingPipeline:
         'douyin': 5,
         'wallstreetcn': 6,
         'thepaper': 7,
-        'zhihu': 8,
-        'toutiao': 9,
-        'bilibili': 10,
-        'juejin': 11
+        'toutiao': 8,
+        'bilibili': 9,
+        'juejin': 10,
     }
     
     def __init__(self, db_settings):
         self.db_settings = db_settings
         self.batch_timestamp = datetime.now()
-        self.conn = None
-        self.cursor = None
+        self.conn: Any = None
+        self.cursor: Any = None
     
     @classmethod
     def from_crawler(cls, crawler):
@@ -51,8 +52,12 @@ class RankingPipeline:
         spider.logger.info(f"批次结束，时间戳: {self.batch_timestamp}")
     
     def process_item(self, item, spider):
-        """处理每个item"""
-        source_id = self.SOURCE_MAP.get(item.get('source', spider.name), 0)
+        """Validate, de-duplicate, and persist one ranking item."""
+        normalized = validate_ranking_item(item)
+        for key, value in normalized.items():
+            item[key] = value
+
+        source_id = self.SOURCE_MAP.get(normalized['source'], 0)
         three_days_ago = datetime.now() - timedelta(days=3)
         
         # 打印输出进行调试
@@ -64,7 +69,7 @@ class RankingPipeline:
             SELECT id FROM ranking 
             WHERE source = %s AND title = %s AND batch_timestamp >= %s
         """
-        self.cursor.execute(check_sql, (source_id, item['title'], three_days_ago))
+        self.cursor.execute(check_sql, (source_id, normalized['title'], three_days_ago))
         result = self.cursor.fetchone()
         
         if result:
@@ -74,8 +79,8 @@ class RankingPipeline:
                 SET hot_rank = %s, batch_timestamp = %s, created_at = NOW()
                 WHERE id = %s
             """
-            self.cursor.execute(update_sql, (item['hot_rank'], self.batch_timestamp, result[0]))
-            spider.logger.debug(f"更新记录: {item['title']}")
+            self.cursor.execute(update_sql, (normalized['hot_rank'], self.batch_timestamp, result[0]))
+            spider.logger.debug(f"Updated record: {normalized['title']}")
         else:
             # 插入新记录
             insert_sql = """
@@ -84,13 +89,13 @@ class RankingPipeline:
                 VALUES (%s, %s, %s, %s, NOW(), %s)
             """
             self.cursor.execute(insert_sql, (
-                item['title'], 
-                item.get('url', ''), 
-                item['hot_rank'], 
+                normalized['title'],
+                normalized['url'],
+                normalized['hot_rank'],
                 self.batch_timestamp, 
                 source_id
             ))
-            spider.logger.debug(f"插入新记录: {item['title']}")
+            spider.logger.debug(f"Inserted record: {normalized['title']}")
         return item
     
     def _ensure_table(self):

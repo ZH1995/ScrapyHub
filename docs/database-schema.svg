@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470">
+  <style>text{font-family:Arial,sans-serif;fill:#172033}.title{font-size:26px;font-weight:700}.head{font-size:17px;font-weight:700;fill:white}.cell{font-size:15px}.line{stroke:#b7c2d0;stroke-width:1}</style>
+  <rect width="900" height="470" fill="#f7f9fc"/><text x="450" y="42" text-anchor="middle" class="title">ranking table</text>
+  <rect x="120" y="80" width="660" height="48" fill="#345b8c"/><text x="145" y="111" class="head">Column</text><text x="380" y="111" class="head">Type</text><text x="575" y="111" class="head">Purpose</text>
+  <g fill="white"><rect x="120" y="128" width="660" height="48"/><rect x="120" y="176" width="660" height="48"/><rect x="120" y="224" width="660" height="48"/><rect x="120" y="272" width="660" height="48"/><rect x="120" y="320" width="660" height="48"/></g>
+  <g class="cell"><text x="145" y="158">id</text><text x="380" y="158">INT AUTO_INCREMENT</text><text x="575" y="158">primary key</text><text x="145" y="206">title</text><text x="380" y="206">VARCHAR(255)</text><text x="575" y="206">trending topic</text><text x="145" y="254">url</text><text x="380" y="254">VARCHAR(512)</text><text x="575" y="254">source link</text><text x="145" y="302">hot_rank</text><text x="380" y="302">INT</text><text x="575" y="302">rank on source</text><text x="145" y="350">source / batch_timestamp</text><text x="380" y="350">TINYINT / TIMESTAMP</text><text x="575" y="350">site and collection batch</text></g>
+  <g class="line"><path d="M120 80V368M350 80V368M545 80V368M780 80V368M120 128H780M120 176H780M120 224H780M120 272H780M120 320H780M120 368H780"/></g>
+  <text x="450" y="415" text-anchor="middle" class="cell">Indexes: idx_batch_timestamp · idx_title · idx_source</text>
+</svg>

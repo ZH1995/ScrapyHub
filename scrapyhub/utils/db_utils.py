@@ -1,6 +1,6 @@
 # scrapyhub/utils/db_utils.py
-import pymysql
-from dbutils.pooled_db import PooledDB
+# Database drivers are imported lazily so parser and pipeline unit tests can
+# run without a local MySQL installation.
 
 # 模块级全局变量
 _pool = None
@@ -14,6 +14,9 @@ class DBPoolManager:
         """获取数据库连接"""
         global _pool
         if _pool is None:
+            import pymysql
+            from dbutils.pooled_db import PooledDB
+
             _pool = PooledDB(
                 creator=pymysql,
                 maxconnections=10,  # 最大连接数

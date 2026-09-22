@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="390" viewBox="0 0 1000 390">
+  <style>text{font-family:Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.head{font-size:15px;font-weight:700;fill:white}.cell{font-size:14px}.line{stroke:#c5cfdb;stroke-width:1}</style>
+  <rect width="1000" height="390" fill="#f7f9fc"/><text x="35" y="42" class="title">Example query result: SELECT * FROM ranking LIMIT 3</text>
+  <rect x="35" y="72" width="930" height="44" fill="#345b8c"/><text x="55" y="100" class="head">id</text><text x="100" y="100" class="head">title</text><text x="420" y="100" class="head">hot_rank</text><text x="535" y="100" class="head">source</text><text x="655" y="100" class="head">batch_timestamp</text>
+  <g fill="white"><rect x="35" y="116" width="930" height="48"/><rect x="35" y="164" width="930" height="48"/><rect x="35" y="212" width="930" height="48"/></g>
+  <g class="cell"><text x="55" y="146">1</text><text x="100" y="146">Example topic for analysis</text><text x="420" y="146">1</text><text x="535" y="146">weibo</text><text x="655" y="146">2026-01-15 10:00:12</text><text x="55" y="194">2</text><text x="100" y="194">A second trending topic</text><text x="420" y="194">2</text><text x="535" y="194">baidu</text><text x="655" y="194">2026-01-15 10:00:12</text><text x="55" y="242">3</text><text x="100" y="242">A third trending topic</text><text x="420" y="242">3</text><text x="535" y="242">douyin</text><text x="655" y="242">2026-01-15 10:00:12</text></g>
+  <g class="line"><path d="M35 72V260M85 72V260M405 72V260M520 72V260M640 72V260M965 72V260M35 116H965M35 164H965M35 212H965M35 260H965"/></g>
+  <text x="35" y="320" class="cell">The pipeline updates matching source + title records within the last three days.</text>
+</svg>
