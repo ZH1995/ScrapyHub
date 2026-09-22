@@ -67,7 +67,7 @@ python -m pytest -q
 
 测试覆盖 Spider 解析、数据格式校验、Pipeline 去重，以及模拟数据库连接下的建表和写入逻辑。
 
-## Responsible Use
+## 负责任使用
 
 This project is intended for learning, research and authorized data collection.
 Please respect each website's terms of service, robots.txt, rate limits and applicable laws.
